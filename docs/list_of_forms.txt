@@ -1,0 +1,26 @@
+plain present affirmative (dictionary)
+plain present negative
+plain past affirmative
+plain past negative
+
+polite present affirmative
+polite present negative
+polite past affirmative
+polite past negative
+
+~te
+negative ~te
+
+~tai
+negative ~tai
+past ~tai
+
+potential present affirmative
+.
+.
+.
+
+
+
+
+
