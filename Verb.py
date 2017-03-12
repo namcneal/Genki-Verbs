@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class Verb(object):
-    def __init__(self, dictionary,kanji, group,meaning):
-        self.dict = dictionary
+    def __init__(self, kanji,kana, group,meaning):
         self.kanji = kanji
+        self.kana = kana
         self.group = group
         self.meaning = meaning
 
     def __unicode__(self):
-		return u"%s(%s): %s"%(self.kanji, self.dict,self.meaning)
+		return u"%s(%s): %s"%(self.kanji, self.kana,self.meaning)
 	
     def __str__(self):
 		return self.__unicode__().encode("utf-8")
@@ -17,19 +17,19 @@ class Verb(object):
 
     # Potential Form
     def potential(self):
-        new_dict = u""
+        new_kana = u""
         new_kanji = u""
         new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
-            new_dict = self.dict[:-1] + u"られる"
+            new_kana = self.kana[:-1] + u"られる"
             new_kanji = self.kanji[:-1] + u"られる"
 
 
         #Godan
         elif self.group == 'u':
-            ending = self.dict[-1]
+            ending = self.kana[-1]
 
             all_endings = {u"う" : u"える",
                            u"つ" : u"てる",
@@ -41,7 +41,7 @@ class Verb(object):
                            u"く" : u"ける",
                            u"ぐ" : u"げる"}
 
-            new_dict = self.dict[:-1] + all_endings[ending]
+            new_kana = self.kana[:-1] + all_endings[ending]
             new_kanji = self.kanji[:-1] + all_endings[ending]               
             
         # Irregular
@@ -55,27 +55,27 @@ class Verb(object):
                               u"くる" : u"来られる"
                              }
 
-            new_dict = irregular_kana[self.dict]
-            new_kanji = irregular_kanji[self.dict]
+            new_kana = irregular_kana[self.kana]
+            new_kanji = irregular_kanji[self.kana]
         
         new_meaning = u"To be able " + self.meaning
-        return Verb(new_dict, new_kanji, u"ru", new_meaning)
+        return Verb(new_kana, new_kanji, u"ru", new_meaning)
     
 
     # Passive Form
     def passive(self):
-        new_dict = u""
+        new_kana = u""
         new_kanji = u""
         new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
-            new_dict = self.dict[:-1] + u"られる"
+            new_kana = self.kana[:-1] + u"られる"
             new_kanji = self.kanji[:-1] + u"られる"
 
         #Godan
         elif self.group == 'u':
-            ending = self.dict[-1]
+            ending = self.kana[-1]
 
             all_endings = {u"う" : u"われる",
                            u"つ" : u"たれる",
@@ -86,7 +86,7 @@ class Verb(object):
                            u"す" : u"される",
                            u"く" : u"かれる",
                            u"ぐ" : u"がれる"}
-            new_dict = self.dict[:-1] + all_endings[ending]
+            new_kana = self.kana[:-1] + all_endings[ending]
             new_kanji = self.kanji[:-1] + all_endings[ending]
 
         # Irregular
@@ -99,25 +99,25 @@ class Verb(object):
                               u"する" : u"される",
                               u"くる" : u"来られる"
                              }
-            new_dict = irregular_kana[self.dict]
-            new_kanji = irregular_kanji[self.dict]
+            new_kana = irregular_kana[self.kana]
+            new_kanji = irregular_kanji[self.kana]
             
         new_meaning = self.meaning + " (passive)"
-        return Verb(new_dict, new_kanji, u"ru", new_meaning)
+        return Verb(new_kana, new_kanji, u"ru", new_meaning)
 
     def causative(self):
-        new_dict = u""
+        new_kana = u""
         new_kanji = u""
         new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
-            new_dict = self.dict[:-1] + u"させる"
+            new_kana = self.kana[:-1] + u"させる"
             new_kanji = self.kanji[:-1] + u"させる"
 
         #Godan
         elif self.group == 'u':
-            ending = self.dict[-1]
+            ending = self.kana[-1]
 
             all_endings = {u"う" : u"わせる",
                            u"つ" : u"たせる",
@@ -129,7 +129,7 @@ class Verb(object):
                            u"く" : u"かせる",
                            u"ぐ" : u"がせる"}
 
-            new_dict = self.dict[:-1] + all_endings[ending]
+            new_kana = self.kana[:-1] + all_endings[ending]
             new_kanji = self.kanji[:-1] + all_endings[ending]               
 
         # Irregular
@@ -142,25 +142,25 @@ class Verb(object):
                               u"する" : u"させる",
                               u"くる" : u"来させる"
                               }
-            new_dict = irregular_kana[self.dict]
-            new_kanji = irregular_kanji[self.dict] 
+            new_kana = irregular_kana[self.kana]
+            new_kanji = irregular_kanji[self.kana] 
 
         new_meaning = self.meaning + u" (causative)"
-        return Verb(new_dict, new_kanji, u"ru", new_meaning)
+        return Verb(new_kana, new_kanji, u"ru", new_meaning)
 
     def causative_passive(self):
-        new_dict = u""
+        new_kana = u""
         new_kanji = u""
         new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
-            new_dict = self.dict[:-1] + u"させられる"
+            new_kana = self.kana[:-1] + u"させられる"
             new_kanji = self.kanji[:-1] + u"させられる"
 
         #Godan
         elif self.group == 'u':
-            ending = self.dict[-1]
+            ending = self.kana[-1]
 
             all_endings = {u"う" : u"わされる",
                            u"つ" : u"たされる",
@@ -172,7 +172,7 @@ class Verb(object):
                            u"く" : u"かされる",
                            u"ぐ" : u"がされる"}
 
-            new_dict = self.dict[:-1] + all_endings[ending]
+            new_kana = self.kana[:-1] + all_endings[ending]
             new_kanji = self.kanji[:-1] + all_endings[ending]               
 
         # Irregular
@@ -185,11 +185,11 @@ class Verb(object):
                               u"する" : u"させる",
                               u"くる" : u"来させられる"
                               }
-            new_dict = irregular_kana[self.dict]
-            new_kanji = irregular_kanji[self.dict] 
+            new_kana = irregular_kana[self.kana]
+            new_kanji = irregular_kanji[self.kana] 
 
         new_meaning = self.meaning + u" (causative-passive)"
-        return Verb(new_dict, new_kanji, u"ru", new_meaning)
+        return Verb(new_kana, new_kanji, u"ru", new_meaning)
 
 
 
