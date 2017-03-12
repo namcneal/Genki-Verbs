@@ -258,6 +258,10 @@ def tai(verb, speech_level="plain", polarity="positive",tense="present"):
 
 
 def tara(verb, speech_level="plain", polarity="positive",tense="present"):
+    does_not_exist = []
+    if verb.kana in does_not_exist:
+        return None
+
     initial_part = u""
     if polarity == "positive":
         initial_part = regular(verb, "plain", "positive", "past")
@@ -269,11 +273,15 @@ def tara(verb, speech_level="plain", polarity="positive",tense="present"):
     return (initial_part[0] + u"ら", initial_part[1] + u"ら")
 
 def ba(verb, speech_level="plain", polarity="positive",tense="present"):
-    pass
+    does_not_exist = []
+    if verb.kana in does_not_exist:
+        return None
 
 def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     ## INCLUDE BOTH MASHOU AND YOU
-    pass
+    does_not_exist = []
+    if verb.kana in does_not_exist:
+        return None
 
         
 
