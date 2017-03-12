@@ -59,7 +59,7 @@ class Verb(object):
             new_kanji = irregular_kanji[self.kana]
         
         new_meaning = u"To be able " + self.meaning
-        return Verb(new_kana, new_kanji, u"ru", new_meaning)
+        return Verb(new_kanji, new_kana, u"ru", new_meaning)
     
 
     # Passive Form
@@ -103,7 +103,7 @@ class Verb(object):
             new_kanji = irregular_kanji[self.kana]
             
         new_meaning = self.meaning + " (passive)"
-        return Verb(new_kana, new_kanji, u"ru", new_meaning)
+        return Verb(new_kanji, new_kana, u"ru", new_meaning)
 
     def causative(self):
         new_kana = u""
@@ -146,7 +146,7 @@ class Verb(object):
             new_kanji = irregular_kanji[self.kana] 
 
         new_meaning = self.meaning + u" (causative)"
-        return Verb(new_kana, new_kanji, u"ru", new_meaning)
+        return Verb(new_kanji, new_kana, u"ru", new_meaning)
 
     def causative_passive(self):
         new_kana = u""
@@ -189,7 +189,7 @@ class Verb(object):
             new_kanji = irregular_kanji[self.kana] 
 
         new_meaning = self.meaning + u" (causative-passive)"
-        return Verb(new_kana, new_kanji, u"ru", new_meaning)
+        return Verb(new_kanji, new_kana, u"ru", new_meaning)
 
 
 
