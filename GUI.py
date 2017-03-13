@@ -8,21 +8,26 @@ class Application(Frame):
         
         #Create the instance, THEN call the grid() method. 
         self.sidebar = Frame(self,height=height, width=sidebar_width)
+        #quick and dirty way of centering could be setting this to 1..would this work with other frames?
         self.sidebar.grid_propagate(0)
-        self.sidebar.grid(row=0, column=0)
+        self.sidebar.grid(row=0, column = 0)
 
         self.input_window = Frame(self, background = "midnight blue",height=height, width = input_window_width)
         self.input_window.grid(row=0, column=1)
 
-    def fill_sidebar(self):
+    def fill_sidebar(self, sidebar_width):
         
         ## HOW DO YOU CENTER THESE
-        self.chapters_label = Label(self.sidebar, text = "Select chapters from Genki:",anchor = CENTER)
+        self.chapters_label = Label(self.sidebar, text = "Select chapters from Genki:")
         self.chapters_label.grid(row=0)
-
+        #Centers within current size of sidebar, not sure how to standardize height/if even possible
+        self.chapters_label.place(x=sidebar_width/2, y=10, anchor="center")
+        
         self.chapters_list = Listbox(self.sidebar,height=6,selectmode=EXTENDED)
         self.chapters_list.grid(row=1)
-        for i in range(0,25):
+        #Centers within current size of sidebar
+        self.chapters_list.place(x=sidebar_width/2, y=70, anchor="center")
+        for i in range(2,25):
             self.chapters_list.insert(i, "Chapter %d" %(i+1)) 
         
 
@@ -39,7 +44,7 @@ class Application(Frame):
         self.grid()
  
         self.createWidgets(sidebar_width = 350)
-        self.fill_sidebar()
+        self.fill_sidebar(sidebar_width = 350)
         print dir(self.sidebar)
 
 
