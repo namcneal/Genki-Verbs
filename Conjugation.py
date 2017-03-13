@@ -144,7 +144,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                     ending = endings[verb.kana[-1]]
         return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
     
-    else:
+    elif verb.group == u"i":
         # Plain/Short Forms
         if speech_level == "plain":
             # Positive
@@ -195,6 +195,8 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                         return (u"しませんでした", u"しませんでした")
                     else:
                         return (u"来ませんでした", u"きませでした")
+        else:
+            return None
 
 def te(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = []
@@ -222,7 +224,7 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
         if verb.kana == u"いく": ending = u"って"
         return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
                     
-    else:
+    elif verb.group == u"i":
         if verb.kana== u"する":
             return (u"して", u"して")
         else:
