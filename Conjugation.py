@@ -305,7 +305,7 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
         return None
         
     elif verb.group == u"ru":
-        if speech_level == "polite"
+        if speech_level == "polite":
             ending = u"ましょう"
             return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
 
@@ -314,8 +314,8 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
             ending = u"よう"
             return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
             
-    elif verb.group == u"u"
-        if speech_level == "polite"
+    elif verb.group == u"u":
+        if speech_level == "polite":
         
             all_endings = {u"う" : u"いましょう",
                            u"つ" : u"ちましょう",
