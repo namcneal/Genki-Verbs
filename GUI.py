@@ -47,7 +47,7 @@ class Application(Frame):
         self.form_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
         self.form_list.place(x=sidebar_width/2, y=255, anchor="center")
 
-        for item in ["Non-past","Past","Te", "Tai","Volitional", "Tara","Ba"][]:
+        for item in ["Non-past","Past","Te", "Tai","Volitional", "Tara","Ba"]:
             self.form_list.insert(END, item)
 
         self.polarity_label = Label(self.sidebar, text = "Select Polarity:",  background = "lemon chiffon")
