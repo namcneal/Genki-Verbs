@@ -11,4 +11,4 @@ for row in test_list:
     test_verbs.append(Verb(row[0], row[1], row[2], row[3]))
 
 for verb in test_verbs:
-    print ba(verb,speech_level="polite",polarity="positive",tense="past")[0]
+    print ba(verb,speech_level="polite",polarity="positive",tense="past")[0].encode("utf-8", errors='replace')
