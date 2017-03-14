@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Verb import Verb
-from Conjugation import regular,te,tara, tai
+from Conjugation import regular,te,tara, tai,ba
 import FileIO
 
 
@@ -11,9 +11,4 @@ for row in test_list:
     test_verbs.append(Verb(row[0], row[1], row[2], row[3]))
 
 for verb in test_verbs:
-    """for level in ["plain", "polite"]:
-        for polarity in ["positive", "negative"]:
-            for tense in ["present", "past"]:
-                print regular(verb, level, polarity, tense)[0]"""
-    print tai(verb)[0]
-    
+    print ba(verb,speech_level="polite",polarity="positive",tense="past")[0]
