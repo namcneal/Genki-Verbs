@@ -279,17 +279,81 @@ def ba(verb, speech_level="plain", polarity="positive",tense="present"):
     if verb.kana in does_not_exist:
         return None
 
+    # Ichidan Verbs
+    else:
+        all_endings = {u"う" : u"えば",
+                       u"つ" : u"てば",
+                       u"る" : u"れば",
+                       u"む" : u"めば",
+                       u"ぶ" : u"べば",
+                       u"ぬ" : u"ねば",
+                       u"す" : u"せば",
+                       u"く" : u"けば",
+                       u"ぐ" : u"げば"}
+
+        ending = all_endings[verb.kana[-1]]
+
+    return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
+
+
+
+
 def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     ## INCLUDE BOTH MASHOU AND YOU
-    does_not_exist = []
+    does_not_exist = [u"ある", u"いる"]
     if verb.kana in does_not_exist:
         return None
-
         
+    elif verb.group == u"ru":
+        if speech_level == "polite"
+            ending = u"ましょう"
+            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
+
+
+        elif speech_level == "plain":
+            ending = u"よう"
+            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
+            
+    elif verb.group == u"u"
+        if speech_level == "polite"
+        
+            all_endings = {u"う" : u"いましょう",
+                           u"つ" : u"ちましょう",
+                           u"る" : u"りましょう",
+                           u"む" : u"みましょう",
+                           u"ぶ" : u"びましょう",
+                           u"ぬ" : u"にましょう",
+                           u"す" : u"しましょう",
+                           u"く" : u"きましょう",
+                           u"ぐ" : u"ぎましょう"}
+        
+            ending = all_endings[verb.kana[-1]]
+        
+            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
+
+        elif speech_level == "plain":
+            
+            all_endings = {u"う" : u"おう",
+                           u"つ" : u"とう",
+                           u"る" : u"ろう",
+                           u"む" : u"もう",
+                           u"ぶ" : u"ぼう",
+                           u"ぬ" : u"のう",
+                           u"す" : u"そう",
+                           u"く" : u"こう",
+                           u"ぐ" : u"ごう"}
+        
+            ending = all_endings[verb.kana[-1]]
+            
+            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
 
 
 
 
 
 
-    
+
+
+
+
+
