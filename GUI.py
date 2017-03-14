@@ -27,8 +27,8 @@ class Application(Frame):
         #self.chapters_list.grid(row=1)
         #Centers within current size of sidebar
         self.chapters_list.place(x=sidebar_width/2, y=55, anchor="center")
-        for i in range(2,25):
-            self.chapters_list.insert(i, "Chapter %d" %(i+1))
+        for i in range(0,22):
+            self.chapters_list.insert(i, "Chapter %d" %(i+3))
 
         self.aspect_label = Label(self.sidebar, text = "Select Verb Aspect(s):",  background = "lemon chiffon")
     
@@ -37,7 +37,7 @@ class Application(Frame):
         self.aspect_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
         self.aspect_list.place(x=sidebar_width/2, y=155, anchor="center")
 
-        for item in ["Potential","Passive", "Causative", "Causative passive","Regular"]:
+        for item in ["Regular","Potential","Passive", "Causative", "Causative passive"]:
             self.aspect_list.insert(END, item)
 
         
@@ -47,7 +47,7 @@ class Application(Frame):
         self.form_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
         self.form_list.place(x=sidebar_width/2, y=255, anchor="center")
 
-        for item in ["Masu","Te", "Tai", "Tara","Ba","Volitional", "Imperfective"]:
+        for item in ["Non-past","Past","Te", "Tai","Volitional", "Tara","Ba"][]:
             self.form_list.insert(END, item)
 
         self.polarity_label = Label(self.sidebar, text = "Select Polarity:",  background = "lemon chiffon")
