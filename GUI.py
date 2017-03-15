@@ -23,7 +23,7 @@ class Application(Frame):
         #Centers within current size of sidebar, not sure how to standardize height/if even possible
         self.chapters_label.place(x=sidebar_width/2, y=10, anchor="center")
         
-        self.chapters_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
+        self.chapters_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon", exportselection=False)
         #PROB CAN DELETE
         #self.chapters_list.grid(row=1)
         #Centers within current size of sidebar
@@ -35,7 +35,7 @@ class Application(Frame):
     
         self.aspect_label.place(x=sidebar_width/2, y=105, anchor="center")    
 
-        self.aspect_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
+        self.aspect_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon", exportselection=False)
         self.aspect_list.place(x=sidebar_width/2, y=155, anchor="center")
 
         for item in ["Regular","Potential","Passive", "Causative", "Causative passive"]:
@@ -45,7 +45,7 @@ class Application(Frame):
         self.form_label = Label(self.sidebar, text = "Select Verb Form(s):",  background = "lemon chiffon")
         self.form_label.place(x=sidebar_width/2, y=205, anchor="center")    
 
-        self.form_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon")
+        self.form_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon", exportselection=False)
         self.form_list.place(x=sidebar_width/2, y=255, anchor="center")
 
         for item in ["Non-past","Past","Te", "Tai","Volitional", "Tara","Ba"]:
@@ -103,10 +103,41 @@ class Application(Frame):
         # s = e.get()
         
     def collect_sidebar_data(self):
-        # TODO: Include error handling if nothing is selected
         selected_chapters = self.chapters_list.curselection()
+        if selected_chapters == tuple():
+            top = Toplevel()
+            top.title("Error")
+            
+            msg = Message(top, text="Please select chapters from Genki.",width=200)
+            msg.pack()
+
+            button = Button(top, text="Dismiss", command=top.destroy)
+            button.pack()
+            return
+            
         selected_aspects = self.aspect_list.curselection()
+        if selected_aspects == tuple():
+            top = Toplevel()
+            top.title("Error")
+            
+            msg = Message(top, text="Please select between regular, potential, etc.",width=200)
+            msg.pack()
+
+            button = Button(top, text="Dismiss", command=top.destroy)
+            button.pack()
+            return 
+
         selected_forms = self.form_list.curselection()
+        if selected_forms == tuple():
+            top = Toplevel()
+            top.title("Error")
+            
+            msg = Message(top, text="Please select verb forms to practice.",width=200)
+            msg.pack()
+
+            button = Button(top, text="Dismiss", command=top.destroy)
+            button.pack()
+            return 
     
         positive = self.pos_var.get()
         negative = self.neg_var.get()
@@ -191,8 +222,6 @@ class Application(Frame):
             
             
         
-
-            #tkMessageBox.showwarning("Please select positive, negative, or both.")
             return
     
     def fill_input_window(self, input_window_width, height):
