@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Tkinter import *
+from FileIO import get_verb_array
 
 
 class Application(Frame):
@@ -103,7 +104,7 @@ class Application(Frame):
         # s = e.get()
         
     def collect_sidebar_data(self):
-        selected_chapters = self.chapters_list.curselection()
+        selected_chapters = [x+3 for x in list(self.chapters_list.curselection())]
         if selected_chapters == tuple():
             top = Toplevel()
             top.title("Error")
@@ -217,12 +218,13 @@ class Application(Frame):
             
             #TODO: Implement polite and plain
             #TODO: Implement the rest of the function to get the list of conjugated verbs
+    
         
-            
+        verbs_to_conjugate = get_verb_array(selected_chapters, u, ru, irr)
             
             
         
-            return
+        return
     
     def fill_input_window(self, input_window_width, height):
             # MAKE LARGER
