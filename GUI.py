@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from Tkinter import *
 from FileIO import get_verb_array
+import random
+from Conjugation import get_random_conjugation
 
 
 class Application(Frame):
@@ -202,11 +204,11 @@ class Application(Frame):
             
         try:
             num_verbs = int(self.num_user_entry.get())
-            if (num_verbs < 1):
+            if (num_verbs < 1) or (num_verbs > 500):
                 top = Toplevel()
                 top.title("Error")
             
-                msg = Message(top, text="Please enter the number of verbs to practice.",width=200, background="alice blue")
+                msg = Message(top, text="Please enter the number (1-500) of verbs to practice.",width=200, background="alice blue")
                 msg.pack()
             
                 button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
@@ -242,6 +244,15 @@ class Application(Frame):
     
         
         verbs_to_conjugate = get_verb_array(selected_chapters, u, ru, irr)
+        random.seed()
+        for num in range(0, num_verbs):
+            pass
+            # Write the code for displaying the verb information, getting user information, etc.
+            # I think we'll need separate functions, unless we can make sure that we dont update until the user wants the next verb. 
+
+            
+        
+        
             
             
         

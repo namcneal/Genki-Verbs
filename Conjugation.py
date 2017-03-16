@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 
 """All the conjugation methods you could ever want. Returns tuples of (kanji, kana)"""
 
@@ -348,6 +349,93 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
             return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
 
 
+def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, pos, neg, past, pres, kana, kanji):
+    random.seed()
+    information = list()
+
+    information.append(verb.kana)
+    information.append(verb.meaning)
+    if kanji:
+        information[0] = u"%s(%s)" %(verb.kanji, verb.kana)
+
+    information.append("Aspect: ")
+    aspect = -1
+    while aspect not in aspect_indices:
+        aspect = random.randint(0,1000)%5
+    if aspect == 0:
+        information[2] += "Regular"
+    elif aspect == 1:
+        verb = verb.potential()
+        information[2] += "Potential"
+    elif aspect == 2:
+        verb = verb.passive()
+        information[2] += "Passive"
+    elif aspect == 3:
+        verb = verb.causative()
+        information[2] += "Causative"
+    elif aspect == 4:
+        verb = verb.causative_passive()
+        information[2] += "Causative-passive"
+
+    possible_speech_levels = list()
+    if plain:
+        possible_speech_levels.append("Plain")
+    if polite:
+        possible_speech_levels.append("Polite")
+    level = random.choice(possible_speech_levels)
+    
+
+    possible_polarities = list()
+    if pos:
+        possible_polarities.append("Positive")
+    if neg:
+        possible_polarities.append("Negative")
+    polarity = random.choice(possible_polarities)
+
+    possible_tenses = list()
+    if pres:
+        possible_tenses.append("Present")
+    if past:
+        possible_tenses.append("Past")
+    tense = random.choice(possible_tenses)
+    
+    conjugated = None
+    information.append("")
+    form = -1
+    while form not in form_indices:
+        form = random.randint(0,1000)%6
+
+    if form == 0:
+        information[3] = "Regular"
+        conjugated = regular(verb, level.lower(), polarity.lower(), tense.lower())
+    elif form == 1:
+        information[3] = "Te form"
+        conjugated = te(verb, level.lower(), polarity.lower(), tense.lower())
+    elif form == 2:
+        information[3] = "Tai form"
+        conjugated = tai(verb, level.lower(), polarity.lower(), tense.lower())
+    elif form == 3:
+        information[3] = "Volitional"
+        conjugated = volitional(verb, level.lower(), polarity.lower(), tense.lower())
+    elif form == 4:
+        information[3] = "Tara"
+        conjugated = tara(verb, level.lower(), polarity.lower(), tense.lower())
+    elif form == 5:
+        information[3] = "Ba"
+        conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
+
+    information.append(polarity)
+    information.append(tense)
+    information.append(level)
+    information.append(conjugated)
+
+    # Use this to fill in the GUI screen. It will give you Dictionary, 
+    return information
+
+
+    
+    
+    
 
 
 
