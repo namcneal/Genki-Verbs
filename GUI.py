@@ -90,18 +90,25 @@ class Application(Frame):
         self.u_checkbox.place(x=sidebar_width-110, y=380, anchor="center")
         self.ru_checkbox.place(x=sidebar_width-70, y=380, anchor="center")
         self.irr_checkbox.place(x=sidebar_width-25, y=380, anchor="center")
+        
+        self.polite_var = IntVar()
+        self.plain_var = IntVar()
+        self.speech_level_label = Label(self.sidebar, text = "Speech Level:",  background = "lemon chiffon")
+        self.speech_level_label.place(x=sidebar_width/4 - 05, y=405, anchor="center")
+        self.polite_checkbox = Checkbutton(self.sidebar, text="Polite", background = "lemon chiffon", variable=self.polite_var)
+        self.plain_checkbox = Checkbutton(self.sidebar, text="Plain", background = "lemon chiffon",variable=self.plain_var)
+        self.polite_checkbox.place(x=sidebar_width-85, y=405, anchor="center")
+        self.plain_checkbox.place(x=sidebar_width-30, y=405, anchor="center")
 
         self.number_label = Label(self.sidebar, text = "Number to Practice:",  background = "lemon chiffon")
-        self.number_label.place(x=sidebar_width-145, y=415, anchor="center")
+        self.number_label.place(x=sidebar_width-145, y=432, anchor="center")
 
         self.num_user_entry = Entry(self.sidebar, width=5,background = "lemon chiffon")
         
         self.num_user_entry.delete(0, END)
         self.num_user_entry.insert(0, "15")
-        self.num_user_entry.place(x=sidebar_width-40, y=415, anchor="center")
+        self.num_user_entry.place(x=sidebar_width-40, y=432, anchor="center")
 
-        # To fetch the current entry text, use the get method:
-        # s = e.get()
         
     def collect_sidebar_data(self):
         selected_chapters = [x+3 for x in list(self.chapters_list.curselection())]
@@ -109,10 +116,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select chapters from Genki.",width=200)
+            msg = Message(top, text="Please select chapters from Genki.",width=200, background="alice blue")
             msg.pack()
 
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
             
@@ -121,10 +128,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select between regular, potential, etc.",width=200)
+            msg = Message(top, text="Please select between regular, potential, etc.",width=200,  background="alice blue")
             msg.pack()
 
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return 
 
@@ -133,10 +140,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select verb forms to practice.",width=200)
+            msg = Message(top, text="Please select verb forms to practice.",width=200, background="alice blue")
             msg.pack()
 
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return 
     
@@ -146,10 +153,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select positive, negative, or both.",width=200)
+            msg = Message(top, text="Please select positive, negative, or both.",width=200, background="alice blue")
             msg.pack()
 
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
         
@@ -159,10 +166,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select a tense(s) to practice.",width=200)
+            msg = Message(top, text="Please select a tense(s) to practice.",width=200, background="alice blue")
             msg.pack()
             
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
         
@@ -172,10 +179,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select kana, kanji, or both to display.",width=200)
+            msg = Message(top, text="Please select kana, kanji, or both to display.",width=200, background="alice blue")
             msg.pack()
             
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
             
@@ -186,10 +193,10 @@ class Application(Frame):
             top = Toplevel()
             top.title("Error")
             
-            msg = Message(top, text="Please select the types of verbs to practice.",width=200)
+            msg = Message(top, text="Please select the types of verbs to practice.",width=200, background="alice blue")
             msg.pack()
             
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
             
@@ -199,24 +206,38 @@ class Application(Frame):
                 top = Toplevel()
                 top.title("Error")
             
-                msg = Message(top, text="Please enter the number of verbs to practice.",width=200)
+                msg = Message(top, text="Please enter the number of verbs to practice.",width=200, background="alice blue")
                 msg.pack()
             
-                button = Button(top, text="Dismiss", command=top.destroy)
+                button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
                 button.pack()
         except:
             ValueError
             top = Toplevel()
             top.title("Error")
                 
-            msg = Message(top, text="Please enter the number of verbs to practice.",width=200)
+            msg = Message(top, text="Please enter the number of verbs to practice.",width=200, background="alice blue")
             msg.pack()
                 
-            button = Button(top, text="Dismiss", command=top.destroy)
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
             button.pack()
             return
             
-            #TODO: Implement polite and plain
+            
+        polite = self.polite_var.get()
+        plain = self.plain_var.get()
+        if not(polite or plain):
+            top = Toplevel()
+            top.title("Error")
+                            
+            msg = Message(top, text="Please select the speech level(s) to practice.",width=200, background="alice blue")
+            msg.pack()
+                                    
+            button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
+            button.pack()
+            return
+                                                
+
             #TODO: Implement the rest of the function to get the list of conjugated verbs
     
         
@@ -260,8 +281,8 @@ class Application(Frame):
             self.speech_level_marker.place(x=input_window_width/3 - 10, y=height/2 + 120, anchor="center")
             
             
-            self.restart_button = Button(self.input_window, text="Restart", command=self.collect_sidebar_data)
-            self.restart_button.place(x=input_window_width/2 - 10, y=height/2 + 140, anchor="center")
+            self.restart_button = Button(self.input_window, text="Restart", command=self.collect_sidebar_data, background= "papaya whip")
+            self.restart_button.place(x=input_window_width/2, y=height/2 + 200, anchor="center")
 
 
     def disable_sidebar(self):
