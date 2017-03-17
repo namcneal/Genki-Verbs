@@ -110,9 +110,83 @@ class Application(Frame):
         self.num_user_entry.delete(0, END)
         self.num_user_entry.insert(0, "15")
         self.num_user_entry.place(x=sidebar_width-40, y=432, anchor="center")
+    
+    def fill_input_window(self, input_window_width, height):
+        # MAKE LARGER
+        self.dictionary_marker = Label(self.input_window, text = "Dictionary", background = "pale turquoise")
+        self.dictionary_marker.place(x=input_window_width/2, y=height/3 -10, anchor="center")
 
+
+        self.meaning_marker = Label(self.input_window, text = "Meaning", background = "pale turquoise")
+        self.meaning_marker.place(x=input_window_width/2, y=height/3 + 30, anchor="center")
+
+
+        self.user_entry = Entry(self.input_window, width=30,background = "lemon chiffon")
+        self.user_entry.delete(0, END)
+        self.user_entry.insert(0, "")
+        self.user_entry.place(x=input_window_width/2,y=height/2, anchor="center")
+
+
+        self.aspect_marker = Label(self.input_window, text = "Aspect", background = "pale turquoise")
+        self.aspect_marker.place(x=input_window_width/3 -10, y=height/2 +40, anchor="center")
         
-    def collect_sidebar_data(self):
+        
+        self.form_marker = Label(self.input_window, text = "Form", background = "pale turquoise")
+        self.form_marker.place(x=input_window_width/3 -10, y=height/2 + 60, anchor="center")
+        
+        self.polarity_marker = Label(self.input_window, text = "Polarity", background = "pale turquoise")
+        self.polarity_marker.place(x=input_window_width/3 -10, y=height/2 + 80, anchor="center")
+        
+        
+        self.tense_marker = Label(self.input_window, text = "Tense", background = "pale turquoise")
+        self.tense_marker.place(x=input_window_width/3 - 10, y=height/2 + 100, anchor="center")
+
+        self.speech_level_marker = Label(self.input_window, text = "Speech Level", background = "pale turquoise")
+        self.speech_level_marker.place(x=input_window_width/3 - 10, y=height/2 + 120, anchor="center")
+        
+        
+        self.restart_button = Button(self.input_window, text="Restart", background= "papaya whip")
+        self.restart_button.place(x=input_window_width/2, y=height/2 + 200, anchor="center")
+
+   
+    
+    def get_and_display_current_conjugation(self):
+        self.current_conjugation = get_random_conjugation(self.verbs_to_conjugate[self.current_index], **self.game_params)
+        self.dictionary_marker.config(text = self.current_conjugation[0])
+        self.dictionary_marker.update()
+
+        self.meaning_marker.config(text = self.current_conjugation[1])
+        self.meaning_marker.update()
+
+        self.aspect_marker.config(text = self.current_conjugation[2])
+        self.aspect_marker.update()
+
+        self.form_marker.config(text = self.current_conjugation[3])
+        self.form_marker.update()
+
+        self.polarity_marker.config(text = self.current_conjugation[4])
+        self.polarity_marker.update()
+        
+        self.tense_marker.config(text = self.current_conjugation[5])
+        self.tense_marker.update()
+
+        self.speech_level_marker.config(text = self.current_conjugation[6])
+        self.speech_level_marker.update()
+
+    def is_conjugation_correct(self):
+        print self.user_entry.get() 
+        print self.current_conjugation[7]
+        if self.user_entry.get().encode("utf-8") in self.current_conjugation[7]:
+            return True
+            print "RIGHT!!"
+        else: return False
+
+    def progress_game(self, event=None):
+        if self.is_conjugation_correct():
+            self.current_index += 1
+        self.get_and_display_current_conjugation()
+        
+    def collect_sidebar_data(self, event=None):
         selected_chapters = [x+3 for x in list(self.chapters_list.curselection())]
         if selected_chapters == tuple():
             top = Toplevel()
@@ -241,60 +315,22 @@ class Application(Frame):
                                                 
 
             #TODO: Implement the rest of the function to get the list of conjugated verbs
-    
         
-        verbs_to_conjugate = get_verb_array(selected_chapters, u, ru, irr)
+        # Clear old list and prepare for a new list of verbs based on current selection
+        self.verbs_to_conjugate = list()
         random.seed()
-        for num in range(0, num_verbs):
-            pass
-            # Write the code for displaying the verb information, getting user information, etc.
-            # I think we'll need separate functions, unless we can make sure that we dont update until the user wants the next verb. 
+        for i in range(0, num_verbs):
+            self.verbs_to_conjugate.append(random.choice(get_verb_array(selected_chapters, u, ru, irr)))
+        self.game_params = {'aspect_indices' : selected_aspects, 
+                            'form_indices' : selected_forms, 
+                            'plain' : plain, 'polite' :polite, 
+                            'pos' : positive, 'neg': negative, 
+                            'past' : past, 'pres' : present, 
+                            'kana' : kana, 'kanji' : kanji}
+        self.get_and_display_current_conjugation()
 
-            
-        
-        
-            
-            
-        
-        return
-    
-    def fill_input_window(self, input_window_width, height):
-            # MAKE LARGER
-            self.dictionary_marker = Label(self.input_window, text = "Dictionary", background = "pale turquoise")
-            self.dictionary_marker.place(x=input_window_width/2, y=height/3 -10, anchor="center")
-    
-    
-            self.meaning_marker = Label(self.input_window, text = "Meaning", background = "pale turquoise")
-            self.meaning_marker.place(x=input_window_width/2, y=height/3 + 30, anchor="center")
-    
-    
-            self.user_entry = Entry(self.input_window, width=30,background = "lemon chiffon")
-            self.user_entry.delete(0, END)
-            self.user_entry.insert(0, "")
-            self.user_entry.place(x=input_window_width/2,y=height/2, anchor="center")
-    
-    
-            self.aspect_marker = Label(self.input_window, text = "Aspect", background = "pale turquoise")
-            self.aspect_marker.place(x=input_window_width/3 -10, y=height/2 +40, anchor="center")
-            
-            
-            self.form_marker = Label(self.input_window, text = "Form", background = "pale turquoise")
-            self.form_marker.place(x=input_window_width/3 -10, y=height/2 + 60, anchor="center")
-            
-            self.polarity_marker = Label(self.input_window, text = "Polarity", background = "pale turquoise")
-            self.polarity_marker.place(x=input_window_width/3 -10, y=height/2 + 80, anchor="center")
-            
-            
-            self.tense_marker = Label(self.input_window, text = "Tense", background = "pale turquoise")
-            self.tense_marker.place(x=input_window_width/3 - 10, y=height/2 + 100, anchor="center")
-
-            self.speech_level_marker = Label(self.input_window, text = "Speech Level", background = "pale turquoise")
-            self.speech_level_marker.place(x=input_window_width/3 - 10, y=height/2 + 120, anchor="center")
-            
-            
-            self.restart_button = Button(self.input_window, text="Restart", command=self.collect_sidebar_data, background= "papaya whip")
-            self.restart_button.place(x=input_window_width/2, y=height/2 + 200, anchor="center")
-
+    def fetch_user_entry(self, event=None):
+        print self.user_entry.get()
 
     def disable_sidebar(self):
         pass
@@ -303,15 +339,26 @@ class Application(Frame):
         pass
         
     def __init__(self, master=None, height=450, width = 700):
+        self.verbs_to_conjugate = list()
+        self.game_params = dict()
+        self.current_index = 0
+        self.current_conjugation = list()
+
         Frame.__init__(self, master)
         master.geometry("%dx%d" %(width, height))
         master.update()
         self.grid()
- 
         self.createWidgets(sidebar_width = 210)
         self.fill_sidebar(sidebar_width = 210)
         self.fill_input_window(input_window_width = width - 210, height = height)
-        print dir(self.sidebar)
+
+        # Bind all the buttons and keys
+        master.bind('<Return>', self.progress_game)
+        self.restart_button.bind('<Button-1>', self.collect_sidebar_data)
+        
+
+        
+
 
 
         

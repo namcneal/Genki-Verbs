@@ -9,9 +9,10 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
     if verb in does_not_exist:
         return None
     
+    beginning = verb
+    ending = ""
     # Ichidan Verbs
     elif verb.group == u"ru":
-        ending = ""
         # Plain/Short Forms
         if speech_level == "plain":
             # Positive
@@ -41,9 +42,6 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                     ending = u"ません"
                 elif tense == "past":
                     ending = u"ませんでした"
-
-        return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
-    
     # Godan
     elif verb.group == u"u":
         ending = ""
@@ -91,8 +89,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                                u"す" : u"さなかった",
                                u"く" : u"かなかった",
                                u"ぐ" : u"がかった"}
-                    ending = endings[verb.kana[-1]]
-
+                    ending = endings[verb.kana[-1]
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
@@ -142,9 +139,8 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                                u"す" : u"しませんでした",
                                u"く" : u"きませんでした",
                                u"ぐ" : u"ぎませんでした"}
-                    ending = endings[verb.kana[-1]]
-        return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
-    
+                    ending = endings[verb.kana[-1]
+
     elif verb.group == u"i":
         # Plain/Short Forms
         if speech_level == "plain":
@@ -379,50 +375,51 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
 
     possible_speech_levels = list()
     if plain:
-        possible_speech_levels.append("Plain")
+        possible_speech_levels.append("Speech level: Plain")
     if polite:
-        possible_speech_levels.append("Polite")
+        possible_speech_levels.append("Speech level: Polite")
     level = random.choice(possible_speech_levels)
     
 
     possible_polarities = list()
     if pos:
-        possible_polarities.append("Positive")
+        possible_polarities.append("Polarity: Positive")
     if neg:
-        possible_polarities.append("Negative")
+        possible_polarities.append("Polarity: Negative")
     polarity = random.choice(possible_polarities)
 
     possible_tenses = list()
     if pres:
-        possible_tenses.append("Present")
+        possible_tenses.append("Tense: Present")
     if past:
-        possible_tenses.append("Past")
+        possible_tenses.append("Tense: Past")
     tense = random.choice(possible_tenses)
     
     conjugated = None
     information.append("")
     form = -1
-    while form not in form_indices:
-        form = random.randint(0,1000)%6
+    while conjugated is None:
+        while form not in form_indices:
+            form = random.randint(0,1000)%6
 
-    if form == 0:
-        information[3] = "Regular"
-        conjugated = regular(verb, level.lower(), polarity.lower(), tense.lower())
-    elif form == 1:
-        information[3] = "Te form"
-        conjugated = te(verb, level.lower(), polarity.lower(), tense.lower())
-    elif form == 2:
-        information[3] = "Tai form"
-        conjugated = tai(verb, level.lower(), polarity.lower(), tense.lower())
-    elif form == 3:
-        information[3] = "Volitional"
-        conjugated = volitional(verb, level.lower(), polarity.lower(), tense.lower())
-    elif form == 4:
-        information[3] = "Tara"
-        conjugated = tara(verb, level.lower(), polarity.lower(), tense.lower())
-    elif form == 5:
-        information[3] = "Ba"
-        conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
+        if form == 0:
+            information[3] = "Form: Regular"
+            conjugated = regular(verb, level.lower(), polarity.lower(), tense.lower())
+        elif form == 1:
+            information[3] = "Form: Te form"
+            conjugated = te(verb, level.lower(), polarity.lower(), tense.lower())
+        elif form == 2:
+            information[3] = "Form: Tai form"
+            conjugated = tai(verb, level.lower(), polarity.lower(), tense.lower())
+        elif form == 3:
+            information[3] = "Form: Volitional"
+            conjugated = volitional(verb, level.lower(), polarity.lower(), tense.lower())
+        elif form == 4:
+            information[3] = "Form: Tara conditional"
+            conjugated = tara(verb, level.lower(), polarity.lower(), tense.lower())
+        elif form == 5:
+            information[3] = "Form: Ba"
+            conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
 
     information.append(polarity)
     information.append(tense)
