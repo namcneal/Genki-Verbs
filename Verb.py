@@ -19,7 +19,6 @@ class Verb(object):
     def potential(self):
         new_kana = u""
         new_kanji = u""
-        new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
@@ -55,18 +54,16 @@ class Verb(object):
                               u"くる" : u"来られる"
                              }
 
-            new_kana = irregular_kana[self.kana]
-            new_kanji = irregular_kanji[self.kana]
+            new_kana = irregular_kana[self.kana[-2:]]
+            new_kanji = irregular_kanji[self.kana[-2:]]
         
-        new_meaning = u"To be able " + self.meaning
-        return Verb(new_kanji, new_kana, u"ru", new_meaning)
+        return Verb(self.kanji[:-2] + new_kanji, self.kana[:-2] + new_kana, u"ru", self.meaning)
     
 
     # Passive Form
     def passive(self):
         new_kana = u""
         new_kanji = u""
-        new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
@@ -99,16 +96,14 @@ class Verb(object):
                               u"する" : u"される",
                               u"くる" : u"来られる"
                              }
-            new_kana = irregular_kana[self.kana]
-            new_kanji = irregular_kanji[self.kana]
+            new_kana = irregular_kana[self.kana[-2:]]
+            new_kanji = irregular_kanji[self.kana[-2:]]
             
-        new_meaning = self.meaning + " (passive)"
-        return Verb(new_kanji, new_kana, u"ru", new_meaning)
+        return Verb(self.kanji[:-2] + new_kanji, self.kana[:-2] + new_kana, u"ru", self.meaning)
 
     def causative(self):
         new_kana = u""
         new_kanji = u""
-        new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
@@ -142,16 +137,14 @@ class Verb(object):
                               u"する" : u"させる",
                               u"くる" : u"来させる"
                               }
-            new_kana = irregular_kana[self.kana]
-            new_kanji = irregular_kanji[self.kana] 
+            new_kana = irregular_kana[self.kana[-2:]]
+            new_kanji = irregular_kanji[self.kana[-2:]] 
 
-        new_meaning = self.meaning + u" (causative)"
-        return Verb(new_kanji, new_kana, u"ru", new_meaning)
+        return Verb(self.kanji[:-2] + new_kanji, self.kana[:-2] + new_kana, u"ru", self.meaning)
 
     def causative_passive(self):
         new_kana = u""
         new_kanji = u""
-        new_meaning = u""
 
         # Ichidan
         if self.group == "ru":
@@ -185,11 +178,10 @@ class Verb(object):
                               u"する" : u"させる",
                               u"くる" : u"来させられる"
                               }
-            new_kana = irregular_kana[self.kana]
-            new_kanji = irregular_kanji[self.kana] 
+            new_kana = irregular_kana[self.kana[-2:]]
+            new_kanji = irregular_kanji[self.kana[-2:]] 
 
-        new_meaning = self.meaning + u" (causative-passive)"
-        return Verb(new_kanji, new_kana, u"ru", new_meaning)
+        return Verb(self.kanji[:-2] + new_kanji, self.kana[:-2] + new_kana, u"ru", self.meaning)
 
 
 
