@@ -146,9 +146,12 @@ class Application(Frame):
         
         
         self.restart_button = Button(self.input_window, text="Restart", background= "papaya whip")
-        self.restart_button.place(x=input_window_width/2, y=height/2 + 200, anchor="center")
+        self.restart_button.place(x=input_window_width/2 - 100, y=height/2 + 200, anchor="center")
+    
+        self.next_button = Button(self.input_window, text="Next", background= "papaya whip")
+        self.next_button.place(x=input_window_width/2 + 100, y=height/2 + 200, anchor="center")
 
-   
+
     
     def get_and_display_current_conjugation(self):
         self.current_conjugation = get_random_conjugation(self.verbs_to_conjugate[self.current_index], **self.game_params)
@@ -182,12 +185,19 @@ class Application(Frame):
         else: return False
 
     def progress_game(self, event=None):
-        if self.is_conjugation_correct():
+        if self.is_conjugation_correct() :
             self.current_index += 1
         print self.current_index
         self.user_entry.delete(0,'end')
         self.get_and_display_current_conjugation()
-        
+            
+            
+    def skip_verb(self, event=None):
+        self.current_index += 1
+        self.user_entry.delete(0,'end')
+        self.get_and_display_current_conjugation()
+    
+    
     def collect_sidebar_data(self, event=None):
         selected_chapters = [x+3 for x in list(self.chapters_list.curselection())]
         if selected_chapters == tuple():
@@ -357,7 +367,7 @@ class Application(Frame):
         # Bind all the buttons and keys
         master.bind('<Return>', self.progress_game)
         self.restart_button.bind('<Button-1>', self.collect_sidebar_data)
-        
+        self.next_button.bind('<Button-2>', self.skip_verb)
 
         
 
