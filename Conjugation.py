@@ -4,13 +4,14 @@ import random
 """All the conjugation methods you could ever want. Returns tuples of (kanji, kana)"""
 
 def regular(verb, speech_level="plain", polarity="positive",tense="present"):
+    beginning_kanji = verb.kanji[:-1]
+    beginning_kana = verb.kana[:-1]
+    ending = ""
+
     does_not_exist = []
 
     if verb in does_not_exist:
         return None
-    
-    beginning = verb
-    ending = ""
     # Ichidan Verbs
     elif verb.group == u"ru":
         # Plain/Short Forms
@@ -42,9 +43,10 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                     ending = u"ません"
                 elif tense == "past":
                     ending = u"ませんでした"
+        ending_kanji = ending
+        ending_kana = ending
     # Godan
     elif verb.group == u"u":
-        ending = ""
         # Plain/Short Forms
         if speech_level == "plain":
             # Positive
@@ -89,7 +91,8 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                                u"す" : u"さなかった",
                                u"く" : u"かなかった",
                                u"ぐ" : u"がかった"}
-                    ending = endings[verb.kana[-1]
+                    ending = endings[verb.kana[-1]]
+       
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
@@ -139,9 +142,12 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                                u"す" : u"しませんでした",
                                u"く" : u"きませんでした",
                                u"ぐ" : u"ぎませんでした"}
-                    ending = endings[verb.kana[-1]
-
+                    ending = endings[verb.kana[-1]]
+        ending_kanji = ending
+        ending_kana = ending
     elif verb.group == u"i":
+        beginning_kanji = verb.kanji[:-2]
+        beginning_kana = verb.kana[:-2]
         # Plain/Short Forms
         if speech_level == "plain":
             # Positive
@@ -149,51 +155,52 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                 if tense == "present":
                     return (verb.kanji, verb.kana)
                 elif tense == "past":
-                    if verb.kana==u"する":
-                        return (u"した", u"した")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"した",u"した")
                     else:
-                        return (u"来た", u"きた")
+                        ending_kanji, ending_kana = (u"来た", u"きた")
             # Negative
             elif polarity == "negative":
                 if tense == "present":
-                    if verb.kana==u"する":
-                        return (u"しない", u"しない")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"しない", u"しない")
                     else:
-                        return (u"来ない", u"こない")
+                        ending_kanji, ending_kana = (u"来ない", u"こない")
                 elif tense == "past":
-                    if verb.kana==u"する":
-                        return (u"しなかった", u"しなかった")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"しなかった", u"しなかった")
                     else:
-                        return (u"来なかった", u"こなかった")
+                        ending_kanji, ending_kana = (u"来なかった", u"こなかった")
 
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
             if polarity == "positive":
                 if tense == "present":
-                    if verb.kana==u"する":
-                        return (u"します", u"します")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"します", u"します")
                     else:
-                        return (u"きます", u"きます")
+                        ending_kanji, ending_kana = (u"きます", u"きます")
                 elif tense == "past":
-                    if verb.kana==u"する":
-                        return (u"しました", u"しました")
+                    if verb_kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"しました", u"しました")
                     else:
-                        return (u"来ました", u"きました")
+                        ending_kanji, ending_kana = (u"来ました", u"きました")
             # Negative
             elif polarity == "negative":
                 if tense == "present":
-                    if verb.kana==u"する":
-                        return (u"しません", u"しません")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"しません", u"しません")
                     else:
-                        return (u"来ません", u"きません")
+                        ending_kanji, ending_kana = (u"来ません", u"きません")
                 elif tense == "past":
-                    if verb.kana==u"する":
-                        return (u"しませんでした", u"しませんでした")
+                    if verb.kana[-2:]==u"する":
+                        ending_kanji, ending_kana = (u"しませんでした", u"しませんでした")
                     else:
-                        return (u"来ませんでした", u"きませでした")
+                        ending_kanji, ending_kana = (u"来ませんでした", u"きませでした")
         else:
             return None
+    return (beginning_kanji + ending_kanji, beginning_kana + ending_kana)
 
 def te(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = []
@@ -222,10 +229,10 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
         return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
                     
     elif verb.group == u"i":
-        if verb.kana== u"する":
-            return (u"して", u"して")
+        if verb.kana[-2:] == u"する":
+             (verb.kanji[:-2] + u"して", verb.kana[:-2] + u"して")
         else:
-            return (u"来て", u"きて")
+            return (verb.kanji[:-2] + u"来て", verb.kana[:-2] + u"きて")
 
 def tai(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある", u"いる"]
@@ -375,24 +382,24 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
 
     possible_speech_levels = list()
     if plain:
-        possible_speech_levels.append("Speech level: Plain")
+        possible_speech_levels.append("Plain")
     if polite:
-        possible_speech_levels.append("Speech level: Polite")
+        possible_speech_levels.append("Polite")
     level = random.choice(possible_speech_levels)
     
 
     possible_polarities = list()
     if pos:
-        possible_polarities.append("Polarity: Positive")
+        possible_polarities.append("Positive")
     if neg:
-        possible_polarities.append("Polarity: Negative")
+        possible_polarities.append("Negative")
     polarity = random.choice(possible_polarities)
 
     possible_tenses = list()
     if pres:
-        possible_tenses.append("Tense: Present")
+        possible_tenses.append("Present")
     if past:
-        possible_tenses.append("Tense: Past")
+        possible_tenses.append("Past")
     tense = random.choice(possible_tenses)
     
     conjugated = None
@@ -421,9 +428,9 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
             information[3] = "Form: Ba"
             conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
 
-    information.append(polarity)
-    information.append(tense)
-    information.append(level)
+    information.append("Polarity: " + polarity)
+    information.append("Tense" + tense)
+    information.append("Speech level" + level)
     information.append(conjugated)
 
     # Use this to fill in the GUI screen. It will give you Dictionary, 
