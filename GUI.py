@@ -175,7 +175,6 @@ class Application(Frame):
 
     def is_conjugation_correct(self):
         print self.user_entry.get() 
-        print self.current_conjugation[7]
         if self.user_entry.get().encode("utf-8") in self.current_conjugation[7]:
             return True
             print "RIGHT!!"
