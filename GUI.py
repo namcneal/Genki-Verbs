@@ -175,14 +175,17 @@ class Application(Frame):
 
     def is_conjugation_correct(self):
         print self.user_entry.get() 
-        if self.user_entry.get().encode("utf-8") in self.current_conjugation[7]:
+        print self.current_conjugation[7][0]
+        if (self.user_entry.get() == self.current_conjugation[7][0]) or \
+            self.user_entry.get() == self.current_conjugation[7][1]:
             return True
-            print "RIGHT!!"
         else: return False
 
     def progress_game(self, event=None):
         if self.is_conjugation_correct():
             self.current_index += 1
+        print self.current_index
+        self.user_entry.delete(0,'end')
         self.get_and_display_current_conjugation()
         
     def collect_sidebar_data(self, event=None):
