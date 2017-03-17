@@ -19,17 +19,18 @@ class Application(Frame):
         self.input_window = Frame(self, background = "pale turquoise",height=height, width = input_window_width)
         self.input_window.grid(row=0, column=1)
 
+
+
+    def get_entry(event):
+        self.user_input = self.user_entry.get()
+
     def fill_sidebar(self, sidebar_width):
         
         self.chapters_label = Label(self.sidebar, text = "Select chapters from Genki:", background = "lemon chiffon")
         self.chapters_label.grid(row=0)
-        #Centers within current size of sidebar, not sure how to standardize height/if even possible
         self.chapters_label.place(x=sidebar_width/2, y=10, anchor="center")
         
         self.chapters_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon", exportselection=False)
-        #PROB CAN DELETE
-        #self.chapters_list.grid(row=1)
-        #Centers within current size of sidebar
         self.chapters_list.place(x=sidebar_width/2, y=55, anchor="center")
         for i in range(0,22):
             self.chapters_list.insert(i, "Chapter %d" %(i+3))
@@ -242,11 +243,28 @@ class Application(Frame):
 
             #TODO: Implement the rest of the function to get the list of conjugated verbs
     
+        #just playing
+        #verbs_to_conjugate = get_verb_array(selected_chapters, u, ru, irr)
+        #random.seed()
         
-        verbs_to_conjugate = get_verb_array(selected_chapters, u, ru, irr)
-        random.seed()
-        for num in range(0, num_verbs):
-            pass
+        output =["Hi","Hello","Howdy", "How are you?", "How's it going?"]
+        
+        expected = ["Hi.","Hello.","Howdy.", "How are you?.", "How's it going?."]
+        
+        
+        for num in range(0, len(output)):
+            self.dictionary_form.set(output[num])
+            self.user_input = StringVar()
+
+            self.user_entry.bind("<Return>",(lambda event: get_entry(self.user_entry.get())))
+            
+            while (self.user_input != expected[num]):
+                self.user_entry.bind("<Return>",(lambda event: get_entry(self.user_entry.get())))
+            
+
+
+
+        
             # Write the code for displaying the verb information, getting user information, etc.
             # I think we'll need separate functions, unless we can make sure that we dont update until the user wants the next verb. 
 
@@ -258,13 +276,16 @@ class Application(Frame):
         
         return
     
+
+    
     def fill_input_window(self, input_window_width, height):
             # MAKE LARGER
-            self.dictionary_marker = Label(self.input_window, text = "Dictionary", background = "pale turquoise")
+            self.dictionary_form = StringVar()
+            self.dictionary_marker = Label(self.input_window, text=self.dictionary_form, background = "pale turquoise")
             self.dictionary_marker.place(x=input_window_width/2, y=height/3 -10, anchor="center")
     
-    
-            self.meaning_marker = Label(self.input_window, text = "Meaning", background = "pale turquoise")
+            self.verb_meaning = StringVar()
+            self.meaning_marker = Label(self.input_window, text =self.verb_meaning, background = "pale turquoise")
             self.meaning_marker.place(x=input_window_width/2, y=height/3 + 30, anchor="center")
     
     
@@ -273,22 +294,24 @@ class Application(Frame):
             self.user_entry.insert(0, "")
             self.user_entry.place(x=input_window_width/2,y=height/2, anchor="center")
     
-    
-            self.aspect_marker = Label(self.input_window, text = "Aspect", background = "pale turquoise")
+            self.verb_aspect = StringVar()
+            self.aspect_marker = Label(self.input_window, text =self.verb_aspect, background = "pale turquoise")
             self.aspect_marker.place(x=input_window_width/3 -10, y=height/2 +40, anchor="center")
             
-            
-            self.form_marker = Label(self.input_window, text = "Form", background = "pale turquoise")
+            self.verb_form = StringVar()
+            self.form_marker = Label(self.input_window, text =self.verb_form, background = "pale turquoise")
             self.form_marker.place(x=input_window_width/3 -10, y=height/2 + 60, anchor="center")
             
-            self.polarity_marker = Label(self.input_window, text = "Polarity", background = "pale turquoise")
+            self.verb_polarity = StringVar()
+            self.polarity_marker = Label(self.input_window, text =self.verb_polarity, background = "pale turquoise")
             self.polarity_marker.place(x=input_window_width/3 -10, y=height/2 + 80, anchor="center")
             
-            
-            self.tense_marker = Label(self.input_window, text = "Tense", background = "pale turquoise")
+            self.verb_tense = StringVar()
+            self.tense_marker = Label(self.input_window, text =self.verb_tense, background = "pale turquoise")
             self.tense_marker.place(x=input_window_width/3 - 10, y=height/2 + 100, anchor="center")
 
-            self.speech_level_marker = Label(self.input_window, text = "Speech Level", background = "pale turquoise")
+            self.verb_speech_level = StringVar()
+            self.speech_level_marker = Label(self.input_window, text =self.verb_speech_level, background = "pale turquoise")
             self.speech_level_marker.place(x=input_window_width/3 - 10, y=height/2 + 120, anchor="center")
             
             
