@@ -429,8 +429,8 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
             conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
 
     information.append("Polarity: " + polarity)
-    information.append("Tense" + tense)
-    information.append("Speech level" + level)
+    information.append("Tense: " + tense)
+    information.append("Speech level: " + level)
     information.append(conjugated)
 
     # Use this to fill in the GUI screen. It will give you Dictionary, 
