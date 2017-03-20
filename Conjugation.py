@@ -410,27 +410,27 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
             form = random.randint(0,1000)%6
 
         if form == 0 or form == 1:
-            information[3] = "Form: Regular"
+            information[3] = u"Regular form"
             conjugated = regular(verb, level.lower(), polarity.lower(), tense.lower())
         elif form == 2:
-            information[3] = "Form: Te form"
+            information[3] = u"～て form"
             conjugated = te(verb, level.lower(), polarity.lower(), tense.lower())
         elif form == 3:
-            information[3] = "Form: Tai form"
+            information[3] = u"～たい form"
             conjugated = tai(verb, level.lower(), polarity.lower(), tense.lower())
         elif form == 4:
-            information[3] = "Form: Volitional"
+            information[3] = u"Volitional"
             conjugated = volitional(verb, level.lower(), polarity.lower(), tense.lower())
         elif form == 5:
-            information[3] = "Form: Tara conditional"
+            information[3] = u"～たら conditional"
             conjugated = tara(verb, level.lower(), polarity.lower(), tense.lower())
         elif form == 6:
-            information[3] = "Form: Ba"
+            information[3] = u"～ば conditional"
             conjugated = ba(verb, level.lower(), polarity.lower(), tense.lower())
 
-    information.append("Polarity: " + polarity)
-    information.append("Tense: " + tense)
-    information.append("Speech level: " + level)
+    information.append(polarity)
+    information.append(tense)
+    information.append(level)
     information.append(conjugated)
 
     # Use this to fill in the GUI screen. It will give you Dictionary, 
