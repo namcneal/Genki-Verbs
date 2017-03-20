@@ -311,8 +311,9 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     elif verb.group == u"ru":
         if speech_level == "polite":
             ending = u"ましょう"
-            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
-
+            beginning_kanji = regular(verb, speech_level, polarity, tense)[0][:-2]
+            beginning_kana = regular(verb, speech_level, polarity, tense)[1][:-2]
+            return (beginning_kanji + ending, beginning_kana + ending)
 
         elif speech_level == "plain":
             ending = u"よう"
@@ -321,19 +322,10 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     elif verb.group == u"u":
         if speech_level == "polite":
         
-            all_endings = {u"う" : u"いましょう",
-                           u"つ" : u"ちましょう",
-                           u"る" : u"りましょう",
-                           u"む" : u"みましょう",
-                           u"ぶ" : u"びましょう",
-                           u"ぬ" : u"にましょう",
-                           u"す" : u"しましょう",
-                           u"く" : u"きましょう",
-                           u"ぐ" : u"ぎましょう"}
-        
-            ending = all_endings[verb.kana[-1]]
-        
-            return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
+            ending = u"ましょう"
+            beginning_kanji = regular(verb, speech_level, polarity, tense)[0][:-2]
+            beginning_kana = regular(verb, speech_level, polarity, tense)[1][:-2]
+            return (beginning_kanji + ending, beginning_kana + ending)
 
         elif speech_level == "plain":
             
@@ -350,7 +342,18 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
             ending = all_endings[verb.kana[-1]]
             
             return (verb.kanji[:-1] + ending, verb.kana[:-1] + ending)
-
+    elif verb.group == u"i":
+        if speech_level == "polite":
+            ending = u"ましょう"
+            beginning_kanji = regular(verb, speech_level, polarity, tense)[0][:-2]
+            beginning_kana = regular(verb, speech_level, polarity, tense)[1][:-2]
+            return (beginning_kanji + ending, beginning_kana + ending)
+        elif speech_level == "plain":
+            if verb.kana[-2:] == u"する":
+                (verb.kanji[:-2] + u"しよう", verb.kana[:-2] + u"しよう")
+            else:
+                return (verb.kanji[:-2] + u"来よう", verb.kana[:-2] + u"こよう")
+            
 
 def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, pos, neg, past, pres, kana, kanji):
     random.seed()
