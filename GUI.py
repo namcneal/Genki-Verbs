@@ -225,6 +225,7 @@ class Application(Frame):
     def skip_verb(self, event=None):
         if self.current_index == len(self.verbs_to_conjugate)-1:
             self.restart_game()
+            return
         self.current_index += 1
         self.user_entry.delete(0,'end')
         self.get_and_display_current_conjugation()

@@ -20,7 +20,6 @@ def get_verb_array(list_of_chapters,u=True,ru=True,irr=True):
                 selected_verbs.append(Verb(*row))
             if irr and row[2] == u"i":
                 selected_verbs.append(Verb(*row))
-    print selected_verbs
     return selected_verbs
 
  
