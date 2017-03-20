@@ -332,6 +332,7 @@ class Application(Frame):
             
                 button = Button(top, text="Dismiss", command=top.destroy, background= "pale turquoise")
                 button.pack()
+                return
         except:
             ValueError
             top = Toplevel()
