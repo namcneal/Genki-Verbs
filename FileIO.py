@@ -2,8 +2,6 @@
 import unicodecsv as csv
 import numpy as np
 from Verb import Verb
-import wave
-import pyaudio
 
 def import_verb_list(list_csv):
     verb_list = csv.reader(open(list_csv),encoding='utf-8')
