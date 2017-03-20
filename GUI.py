@@ -175,7 +175,9 @@ class Application(Frame):
         self.tense_marker.config(text = self.current_conjugation[5])
         self.tense_marker.update()
 
-        self.speech_level_marker.config(text = self.current_conjugation[6])
+        casual = ""
+        if self.current_conjugation[6] == u"Plain": casual = u"/Casual" 
+        self.speech_level_marker.config(text = self.current_conjugation[6]+casual)
         self.speech_level_marker.update()
 
         self.number_marker.config(text = "%d/%d" %(self.current_index+1, len(self.verbs_to_conjugate)))
