@@ -182,7 +182,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                     else:
                         ending_kanji, ending_kana = (u"きます", u"きます")
                 elif tense == "past":
-                    if verb_kana[-2:]==u"する":
+                    if verb.kana[-2:]==u"する":
                         ending_kanji, ending_kana = (u"しました", u"しました")
                     else:
                         ending_kanji, ending_kana = (u"来ました", u"きました")
@@ -198,8 +198,6 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                         ending_kanji, ending_kana = (u"しませんでした", u"しませんでした")
                     else:
                         ending_kanji, ending_kana = (u"来ませんでした", u"きませでした")
-        else:
-            return None
     return (beginning_kanji + ending_kanji, beginning_kana + ending_kana)
 
 def te(verb, speech_level="plain", polarity="positive",tense="present"):
@@ -367,7 +365,7 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
     information.append("Aspect: ")
     aspect = -1
     while aspect not in aspect_indices:
-        aspect = random.randint(0,1000)%5
+        aspect = random.randint(0,40)%5
     if aspect == 0:
         information[2] += "Regular"
     elif aspect == 1:
@@ -410,7 +408,7 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
     form = -1
     while conjugated is None:
         while form not in form_indices:
-            form = random.randint(0,1000)%6
+            form = random.randint(0,40)%6
 
         if form == 0 or form == 1:
             information[3] = u"Regular form"
