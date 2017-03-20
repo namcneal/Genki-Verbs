@@ -180,7 +180,8 @@ class Application(Frame):
         self.speech_level_marker.config(text = self.current_conjugation[6]+casual)
         self.speech_level_marker.update()
 
-        self.number_marker.config(text = "%d/%d" %(self.current_index+1, len(self.verbs_to_conjugate)))
+        self.number_marker.config(text = "%d/%d" %(self.current_index+1, self.num_verbs))
+        
 
     def is_conjugation_correct(self):
         if (self.user_entry.get() == self.current_conjugation[7][0]) or \
@@ -216,21 +217,30 @@ class Application(Frame):
 
     def progress_game(self, event=None):
         if self.is_conjugation_correct() :
-            if self.current_index + 1 == len(self.verbs_to_conjugate):
+            if self.current_index + 1 == self.num_verbs:
                 self.display_end_screen()
             else:
                 self.current_index += 1
                 self.user_entry.delete(0,'end')
                 self.get_and_display_current_conjugation()
-            
-            
+
+    def restore_skip_button(self, event=None):
+        self.skip_button.config(state = NORMAL)
+        pass
+        
     def skip_verb(self, event=None):
-        if self.current_index == len(self.verbs_to_conjugate)-1:
+        self.skip_button.config(state = DISABLED)
+        if self.current_index == self.num_verbs - 1:
             self.restart_game()
             return
-        self.current_index += 1
-        self.user_entry.delete(0,'end')
-        self.get_and_display_current_conjugation()
+
+        try:
+            self.current_index += 1
+            self.user_entry.delete(0,'end')
+            self.get_and_display_current_conjugation()
+        except:
+            IndexError
+        self.master.after(3000, self.restore_skip_button)
     
     
     def collect_sidebar_data(self, event=None):
@@ -365,8 +375,8 @@ class Application(Frame):
             #TODO: Implement the rest of the function to get the list of conjugated verbs
         
         # Clear old list and prepare for a new list of verbs based on current selection
-        self.verbs_to_conjugate = list()
         random.seed()
+        self.num_verbs = num_verbs
         for i in range(0, num_verbs):
             self.verbs_to_conjugate.append(random.choice(FileIO.get_verb_array(selected_chapters, u, ru, irr)))
         self.game_params = {'aspect_indices' : selected_aspects, 
@@ -378,6 +388,15 @@ class Application(Frame):
         self.get_and_display_current_conjugation()
 
     def restart_game(self, event=None):
+        self.skip_button.config(state = DISABLED)
+        self.restart_button.config(state = DISABLED)
+        
+        self.num_verbs = -1
+        self.verbs_to_conjugate = list()
+        self.game_params = dict()
+        self.current_index = 0
+        self.current_conjugation = list()
+        
         self.input_window.configure(background = "pale turquoise")
         self.dictionary_marker.config(background = "pale turquoise")
         self.dictionary_marker.update()
@@ -404,34 +423,25 @@ class Application(Frame):
 
         self.current_index = 0
         self.collect_sidebar_data()
+        self.skip_button.config(state = NORMAL)
+        self.restart_button.config(state = NORMAL)
         
     def __init__(self, master=None, height=450, width = 700):
+        self.num_verbs = -1
         self.verbs_to_conjugate = list()
         self.game_params = dict()
         self.current_index = 0
         self.current_conjugation = list()
 
         Frame.__init__(self, master)
-        master.geometry("%dx%d" %(width, height))
-        master.update()
+        self.master.geometry("%dx%d" %(width, height))
+        self.master.update()
         self.grid()
         self.createWidgets(sidebar_width = 210)
         self.fill_sidebar(sidebar_width = 210)
         self.fill_input_window(input_window_width = width - 210, height = height)
 
         # Bind all the buttons and keys
-        master.bind('<Return>', self.progress_game)
-        self.restart_button.bind('<Button-1>', self.restart_game)
-        self.skip_button.bind('<Button-1>', self.skip_verb)
-
-        
-
-
-
-        
-    
-
-root = Tk()
-app = Application(master=root)
-app.mainloop()
-root.destroy()
+        self.master.bind('<Return>', self.progress_game)
+        self.restart_button.config(command= self.restart_game)
+        self.skip_button.config(command= self.skip_verb)

@@ -28,7 +28,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                     ending = u"ない"
                 elif tense == "past":
                     ending = u"なかった"
-
+            
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
@@ -67,6 +67,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
 
                     ending = endings[verb.kana[-1]]
                     if verb.kana == u"いく": ending = u"った"
+
                     
             # Negative
             elif polarity == "negative":
@@ -92,7 +93,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                                u"く" : u"かなかった",
                                u"ぐ" : u"がかった"}
                     ending = endings[verb.kana[-1]]
-       
+      
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
@@ -153,7 +154,7 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
             # Positive
             if polarity == "positive":
                 if tense == "present":
-                    return (verb.kanji, verb.kana)
+                    return (verb.kanji, verb.kana[-2:])
                 elif tense == "past":
                     if verb.kana[-2:]==u"する":
                         ending_kanji, ending_kana = (u"した",u"した")
@@ -171,7 +172,6 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                         ending_kanji, ending_kana = (u"しなかった", u"しなかった")
                     else:
                         ending_kanji, ending_kana = (u"来なかった", u"こなかった")
-
         # Polite/Long forms
         elif speech_level == "polite":
             # Positive
@@ -198,8 +198,9 @@ def regular(verb, speech_level="plain", polarity="positive",tense="present"):
                         ending_kanji, ending_kana = (u"しませんでした", u"しませんでした")
                     else:
                         ending_kanji, ending_kana = (u"来ませんでした", u"きませでした")
-    return (beginning_kanji + ending_kanji, beginning_kana + ending_kana)
 
+    return (beginning_kanji + ending_kanji, beginning_kana + ending_kana)
+    
 def te(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = []
 

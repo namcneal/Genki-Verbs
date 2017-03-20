@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Tkinter import Tk
 from GUI import Application
 
 if __name__ == '__main__':
