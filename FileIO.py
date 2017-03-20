@@ -2,6 +2,8 @@
 import unicodecsv as csv
 import numpy as np
 from Verb import Verb
+import wave
+import pyaudio
 
 def import_verb_list(list_csv):
     verb_list = csv.reader(open(list_csv),encoding='utf-8')
@@ -20,6 +22,9 @@ def get_verb_array(list_of_chapters,u=True,ru=True,irr=True):
                 selected_verbs.append(Verb(*row))
     print selected_verbs
     return selected_verbs
+
+ 
+        
 
 
 
