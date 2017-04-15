@@ -6,7 +6,7 @@ class Verb(object):
         self.kana = kana
         self.group = group
         self.meaning = meaning
-        self.original_kana = kana
+        self.dictionary_form_kana = kana
 
     def __unicode__(self):
 		return u"%s(%s): %s"%(self.kanji, self.kana,self.meaning)

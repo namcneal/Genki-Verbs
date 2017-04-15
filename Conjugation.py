@@ -317,7 +317,7 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
 def tai(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある"]
 
-    if verb.original_kana[-2:] in does_not_exist:
+    if verb.dictionary_form_kana[-2:] in does_not_exist:
         return None    
 
     kanji_stem, kana_stem = get_stem(verb)
@@ -343,7 +343,7 @@ def tai(verb, speech_level="plain", polarity="positive",tense="present"):
 
 def tara(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = []
-    if verb.original_kana in does_not_exist:
+    if verb.dictionary_form_kana in does_not_exist:
         return None
 
     initial_part = u""
@@ -379,7 +379,7 @@ def ba(verb, speech_level="plain", polarity="positive",tense="present"):
 
 def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある", u"いる"]
-    if verb.original.kana[-2:] in does_not_exist:
+    if verb.dictionary_form_kana[-2:] in does_not_exist:
         return None
         
     elif verb.group == u"ru":
