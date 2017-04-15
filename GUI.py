@@ -10,7 +10,7 @@ class Application(Frame):
         input_window_width = self.master.winfo_width() - sidebar_width
         
         #Create the instance, THEN call the grid() method. 
-        self.sidebar = Frame(self,height=height, width=sidebar_width, background="papaya whip")
+        self.sidebar = Frame(self,height=height, width=sidebar_width, background="lemon chiffon")
         #quick and dirty way of centering could be setting this to 1..would this work with other frames?
         self.sidebar.grid_propagate(0)
         self.sidebar.grid(row=0, column = 0)
