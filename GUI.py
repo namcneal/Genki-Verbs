@@ -60,7 +60,7 @@ class Application(Frame):
         self.form_list.place(x=sidebar_width/2, y=255, anchor="center")
         self.form_list.select_set(0)
 
-        for item in ["Non-past","Past","Te", "Tai","Volitional", "Tara","Ba"]:
+        for item in ["Non-past","Past","Te", "Tai","Tara","Ba"]:
             self.form_list.insert(END, item)
         
         self.pos_var = IntVar()

@@ -427,7 +427,7 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
 
 global all_forms, form_names, all_aspects
 all_forms = list([non_past, past,te,tai,volitional,tara,ba])   
-form_names = list([u"Non-past or Past", u"Non-past or Past",u"～て form",u"～たい form",u"Volitional",u"～たら conditional",u"～ば conditional"])      
+form_names = list([u"Non-past or Past", u"Non-past or Past",u"～て form",u"～たい form",u"～たら conditional",u"～ば conditional"])      
 all_aspects = list(["Regular","Potential","Passive","Causative","Causative-passive"])
 
 
