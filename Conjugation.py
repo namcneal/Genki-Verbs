@@ -29,7 +29,7 @@ def get_stem(verb):
             kanji_stem, kana_stem = (u"し", u"し")
         else:
             kanji_stem, kana_stem = (u"来", u"き")
-    return (verb.kanji[:-2]+kanji_stem, verb.kana[:-2]+kana_stem)
+    return (kanji_stem, kana_stem)
 
 def non_past(verb, speech_level="plain", polarity="positive",tense="present"):
     if tense == "past":
@@ -42,8 +42,6 @@ def non_past(verb, speech_level="plain", polarity="positive",tense="present"):
 
     if verb in does_not_exist:
         return None
-
-
 
     # Ichidan Verbs
     elif verb.group == u"ru":
@@ -204,7 +202,7 @@ def past(verb, speech_level="plain", polarity="positive",tense="past"):
                            u"ぐ" : u"いだ"}
 
                 ending = endings[verb.kana[-1]]
-                if verb.kana == u"いく": ending = u"った"
+                if verb.kana[-2:] == u"いく": ending = u"った"
                     
             # Negative
             elif polarity == "negative":
@@ -319,7 +317,7 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
 def tai(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある"]
 
-    if verb.kana[-2:] in does_not_exist:
+    if verb.original.kana[-2:] in does_not_exist:
         return None
 
     kanji_stem, kana_stem = get_stem(verb)
@@ -381,7 +379,7 @@ def ba(verb, speech_level="plain", polarity="positive",tense="present"):
 
 def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある", u"いる"]
-    if verb.kana[-2:] in does_not_exist:
+    if verb.original.kana[-2:] in does_not_exist:
         return None
         
     elif verb.group == u"ru":

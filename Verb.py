@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 class Verb(object):
-    def __init__(self, kanji,kana, group,meaning):
+    def __init__(self, kanji,kana, group,meaning,original=None):
         self.kanji = kanji
         self.kana = kana
         self.group = group
         self.meaning = meaning
+        self.original = original
 
     def __unicode__(self):
 		return u"%s(%s): %s"%(self.kanji, self.kana,self.meaning)
@@ -13,10 +14,14 @@ class Verb(object):
     def __str__(self):
 		return self.__unicode__().encode("utf-8")
 
+    def save_original(self):
+        self.original = Verb(self.kanji, self.kana, self.group, self.meaning)
+
     ## Verb conjugation methods
 
     # Potential Form
     def potential(self):
+        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -57,11 +62,12 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
         
-        return Verb(new_kanji, new_kana, u"ru", self.meaning)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
     
 
     # Passive Form
     def passive(self):
+        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -99,9 +105,10 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
             
-        return Verb(new_kanji, new_kana, u"ru", self.meaning)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
 
     def causative(self):
+        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -140,9 +147,10 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
 
     def causative_passive(self):
+        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -179,7 +187,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
 
 
 
