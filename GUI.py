@@ -20,7 +20,6 @@ class Application(Frame):
     
     def get_available_chapters(self):
         import glob, os
-        os.chdir("Verbs")
         chapters = list()
         for file_name in glob.glob("*.csv"):
             file_name = file_name[20:][:-4]
