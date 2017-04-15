@@ -317,8 +317,8 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
 def tai(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = [u"ある"]
 
-    if verb.original.kana[-2:] in does_not_exist:
-        return None
+    if verb.original_kana[-2:] in does_not_exist:
+        return None    
 
     kanji_stem, kana_stem = get_stem(verb)
     
@@ -343,7 +343,7 @@ def tai(verb, speech_level="plain", polarity="positive",tense="present"):
 
 def tara(verb, speech_level="plain", polarity="positive",tense="present"):
     does_not_exist = []
-    if verb.kana in does_not_exist:
+    if verb.original_kana in does_not_exist:
         return None
 
     initial_part = u""
@@ -426,7 +426,7 @@ def volitional(verb, speech_level="plain", polarity="positive",tense="present"):
                 return (verb.kanji[:-2] + u"来よう", verb.kana[:-2] + u"こよう")
 
 global all_forms, form_names, all_aspects
-all_forms = list([non_past, past,te,tai,volitional,tara,ba])   
+all_forms = list([non_past, past,te,tai,tara,ba])   
 form_names = list([u"Non-past or Past", u"Non-past or Past",u"～て form",u"～たい form",u"～たら conditional",u"～ば conditional"])      
 all_aspects = list(["Regular","Potential","Passive","Causative","Causative-passive"])
 
@@ -477,8 +477,8 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
     tense = random.choice(possible_tenses)
     
     information.append("")
-    conjugated = u""
-    while conjugated == u"":
+    conjugated = None
+    while conjugated == None:
         form_index = random.choice(form_indices)
         information[3] += form_names[form_index]
         conjugated = all_forms[form_index](verb, level.lower(), polarity.lower(), tense.lower())

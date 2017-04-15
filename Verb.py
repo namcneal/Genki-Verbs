@@ -6,7 +6,7 @@ class Verb(object):
         self.kana = kana
         self.group = group
         self.meaning = meaning
-        self.original = original
+        self.original_kana = kana
 
     def __unicode__(self):
 		return u"%s(%s): %s"%(self.kanji, self.kana,self.meaning)
@@ -21,7 +21,6 @@ class Verb(object):
 
     # Potential Form
     def potential(self):
-        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -62,12 +61,11 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
         
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
     
 
     # Passive Form
     def passive(self):
-        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -105,10 +103,9 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
             
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
 
     def causative(self):
-        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -147,10 +144,9 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
 
     def causative_passive(self):
-        self.save_original()
         new_kana = u""
         new_kanji = u""
 
@@ -187,7 +183,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
 
 
 
