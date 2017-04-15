@@ -61,7 +61,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
         
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
     
 
     # Passive Form
@@ -103,7 +103,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
             
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
 
     def causative(self):
         new_kana = u""
@@ -144,7 +144,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
 
     def causative_passive(self):
         new_kana = u""
@@ -183,7 +183,7 @@ class Verb(object):
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
             new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
 
-        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.original_kana)
+        return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
 
 
 
