@@ -17,6 +17,16 @@ class Application(Frame):
 
         self.input_window = Frame(self, background = "pale turquoise",height=height, width = input_window_width)
         self.input_window.grid(row=0, column=1)
+    
+    def get_available_chapters(self):
+        import glob, os
+        os.chdir("Verbs")
+        chapters = list()
+        for file_name in glob.glob("*.csv"):
+            file_name = file_name[20:][:-4]
+            chapters.append(int(file_name))
+        chapters.sort()
+        return chapters
 
     def fill_sidebar(self, sidebar_width):
         
@@ -28,8 +38,9 @@ class Application(Frame):
         self.chapters_list = Listbox(self.sidebar,height=4,selectmode=EXTENDED, background = "lemon chiffon", exportselection=False)
         self.chapters_list.select_set(0)
         self.chapters_list.place(x=sidebar_width/2, y=55, anchor="center")
-        for i in range(0,22):
-            self.chapters_list.insert(i, "Chapter %d" %(i+3))
+        
+        for i in self.get_available_chapters():
+            self.chapters_list.insert(i-3, "Chapter %d" %i)
 
         self.aspect_label = Label(self.sidebar, text = "Select Verb Aspect(s):",  background = "lemon chiffon")
     
@@ -143,53 +154,58 @@ class Application(Frame):
         self.speech_level_marker = Label(self.input_window, text = "Speech Level", background = "pale turquoise")
         self.speech_level_marker.place(x=input_window_width/3 - 10, y=height/2 + 120, anchor="center")
 
-        self.number_marker = Label(self.input_window, text = "/", background = "pale turquoise")
-        self.number_marker.place(x=input_window_width/2, y=height/2 + 175, anchor="center")
+        self.number_marker = Label(self.input_window, text = "Completed: /", background = "pale turquoise")
+        self.number_marker.place(x=input_window_width/2, y=height/2 + 160, anchor="center")
         
         self.restart_button = Button(self.input_window, text="Restart", background= "papaya whip")
-        self.restart_button.place(x=input_window_width/2 - 100, y=height/2 + 200, anchor="center")
+        self.restart_button.place(x=input_window_width/2 - 150, y=height/2 + 200, anchor="center")
     
-        self.skip_button = Button(self.input_window, text="Skip", background= "papaya whip")
-        self.skip_button.place(x=input_window_width/2 + 100, y=height/2 + 200, anchor="center")
+        self.skip_button = Button(self.input_window, text="Skip for Now", background= "papaya whip")
+        self.skip_button.place(x=input_window_width/2, y=height/2 + 200, anchor="center")
+
+        self.show_answer_button = Button(self.input_window, text="Show Answer", background= "papaya whip")
+        self.show_answer_button.place(x=input_window_width/2+150, y=height/2 + 200, anchor="center")
 
 
 
     
     def get_and_display_current_conjugation(self):
-        self.current_conjugation = get_random_conjugation(self.verbs_to_conjugate[self.current_index], **self.game_params)
-        self.dictionary_marker.config(text = self.current_conjugation[0])
+        self.user_entry.delete(0, END)
+        self.dictionary_marker.config(text = self.verbs[0][0])
         self.dictionary_marker.update()
 
-        self.meaning_marker.config(text = self.current_conjugation[1])
+        self.meaning_marker.config(text = self.verbs[0][1])
         self.meaning_marker.update()
 
-        self.aspect_marker.config(text = self.current_conjugation[2])
+        self.aspect_marker.config(text = self.verbs[0][2])
         self.aspect_marker.update()
 
-        self.form_marker.config(text = self.current_conjugation[3])
+        self.form_marker.config(text = self.verbs[0][3])
         self.form_marker.update()
 
-        self.polarity_marker.config(text = self.current_conjugation[4])
+        self.polarity_marker.config(text = self.verbs[0][4])
         self.polarity_marker.update()
         
-        self.tense_marker.config(text = self.current_conjugation[5])
+        self.tense_marker.config(text = self.verbs[0][5])
         self.tense_marker.update()
 
         casual = ""
-        if self.current_conjugation[6] == u"Plain": casual = u"/Casual" 
-        self.speech_level_marker.config(text = self.current_conjugation[6]+casual)
+        if self.verbs[0][6] == u"Plain": casual = u"/Casual" 
+        self.speech_level_marker.config(text = self.verbs[0][6]+casual)
         self.speech_level_marker.update()
 
-        self.number_marker.config(text = "%d/%d" %(self.current_index+1, self.num_verbs))
+        self.number_marker.config(text = "Completed: %d/%d" %(self.num_verbs-len(self.verbs), self.num_verbs))
         
 
     def is_conjugation_correct(self):
-        if (self.user_entry.get() == self.current_conjugation[7][0]) or \
-            self.user_entry.get() == self.current_conjugation[7][1]:
+        if (self.user_entry.get() == self.verbs[0][7][0]) or \
+            self.user_entry.get() == self.verbs[0][7][1]:
             return True
         else: return False
 
     def display_end_screen(self):
+        self.user_entry.delete(0, END) 
+        self.user_entry.insert(0, u"やった！")
         self.input_window.configure(background = "pale green")
         self.dictionary_marker.config(background = "pale green",text = u"やった！")
         self.dictionary_marker.update()
@@ -212,15 +228,15 @@ class Application(Frame):
         self.speech_level_marker.config(background = "pale green",text = u"やった！")
         self.speech_level_marker.update()
 
-        self.number_marker.config(background = "pale green", text = "%s/%s" %(u"やった！", u"やった！"))
+        self.number_marker.config(background = "pale green", text = "Press restart to play again!")
 
 
     def progress_game(self, event=None):
         if self.is_conjugation_correct() :
-            if self.current_index + 1 == self.num_verbs:
+            if len(self.verbs)==1:
                 self.display_end_screen()
             else:
-                self.current_index += 1
+                del self.verbs[0]
                 self.user_entry.delete(0,'end')
                 self.get_and_display_current_conjugation()
 
@@ -229,20 +245,24 @@ class Application(Frame):
         pass
         
     def skip_verb(self, event=None):
+        self.user_entry.delete(0, END) 
         self.skip_button.config(state = DISABLED)
-        if self.current_index == self.num_verbs - 1:
-            self.restart_game()
-            return
 
         try:
-            self.current_index += 1
+            self.verbs.append(self.verbs.pop(0))
             self.user_entry.delete(0,'end')
             self.get_and_display_current_conjugation()
         except:
             IndexError
         self.master.after(3000, self.restore_skip_button)
-    
-    
+
+    def show_answer(self, event = None):
+        try:
+            self.user_entry.delete(0, END) 
+            self.user_entry.insert(0, self.verbs[0][7][1])
+        except IndexError:
+            pass
+
     def collect_sidebar_data(self, event=None):
         selected_chapters = [x+3 for x in list(self.chapters_list.curselection())]
         if selected_chapters == tuple():
@@ -376,15 +396,18 @@ class Application(Frame):
         
         # Clear old list and prepare for a new list of verbs based on current selection
         random.seed()
-        self.num_verbs = num_verbs
-        for i in range(0, num_verbs):
-            self.verbs_to_conjugate.append(random.choice(FileIO.get_verb_array(selected_chapters, u, ru, irr)))
         self.game_params = {'aspect_indices' : selected_aspects, 
                             'form_indices' : selected_forms, 
                             'plain' : plain, 'polite' :polite, 
                             'pos' : positive, 'neg': negative, 
                             'past' : past, 'pres' : present, 
                             'kana' : kana, 'kanji' : kanji}
+        self.num_verbs = num_verbs
+        all_verbs = FileIO.get_verb_array(selected_chapters, u, ru, irr)
+        for i in range(0, num_verbs):
+            self.verbs.append(get_random_conjugation(random.choice(all_verbs),
+                              **self.game_params))
+        
         self.get_and_display_current_conjugation()
 
     def restart_game(self, event=None):
@@ -392,10 +415,8 @@ class Application(Frame):
         self.restart_button.config(state = DISABLED)
         
         self.num_verbs = -1
-        self.verbs_to_conjugate = list()
         self.game_params = dict()
-        self.current_index = 0
-        self.current_conjugation = list()
+        self.verbs = list()
         
         self.input_window.configure(background = "pale turquoise")
         self.dictionary_marker.config(background = "pale turquoise")
@@ -428,7 +449,7 @@ class Application(Frame):
         
     def __init__(self, master=None, height=450, width = 700):
         self.num_verbs = -1
-        self.verbs_to_conjugate = list()
+        self.verbs = list()
         self.game_params = dict()
         self.current_index = 0
         self.current_conjugation = list()
@@ -445,3 +466,4 @@ class Application(Frame):
         self.master.bind('<Return>', self.progress_game)
         self.restart_button.config(command= self.restart_game)
         self.skip_button.config(command= self.skip_verb)
+        self.show_answer_button.config(command=self.show_answer)
