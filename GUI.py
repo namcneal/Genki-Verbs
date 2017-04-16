@@ -404,8 +404,10 @@ class Application(Frame):
         self.num_verbs = num_verbs
         all_verbs = FileIO.get_verb_array(selected_chapters, u, ru, irr)
         for i in range(0, num_verbs):
-            self.verbs.append(get_random_conjugation(random.choice(all_verbs),
-                              **self.game_params))
+            entry = None
+            while entry == None:
+                entry = get_random_conjugation(random.choice(all_verbs), **self.game_params)
+            self.verbs.append(entry)
         
         self.get_and_display_current_conjugation()
 

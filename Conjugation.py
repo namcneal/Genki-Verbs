@@ -441,12 +441,11 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
         information[0] = u"%s(%s)" %(verb.kanji, verb.kana)
 
     information.append("Aspect: ")
-    aspected = None
-    while aspected == None:
-        aspect = random.choice(aspect_indices)
-        information[2] += all_aspects[aspect]
+    aspect = random.choice(aspect_indices)
+    information[2] += all_aspects[aspect]
+    try:
         if aspect == 0:
-            pass
+            verb = verb
         elif aspect == 1: 
             verb = verb.potential()
         elif aspect == 2:
@@ -455,6 +454,8 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
             verb = verb.causative()
         elif aspect == 4:
             verb = verb.causative_passive()
+    except AttributeError:
+        return None
 
     possible_speech_levels = list()
     if plain:
@@ -478,12 +479,15 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
         possible_tenses.append("Past")
     tense = random.choice(possible_tenses)
     
-    information.append("")
-    conjugated = None
-    while conjugated == None:
+    try:
+        information.append("")
         form_index = random.choice(form_indices)
         information[3] += form_names[form_index]
         conjugated = all_forms[form_index](verb, level.lower(), polarity.lower(), tense.lower())
+    except AttributeError:
+        return None
+    except TypeError:
+        return None
 
     information.append(polarity)
     information.append(tense)

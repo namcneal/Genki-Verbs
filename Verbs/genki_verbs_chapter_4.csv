@@ -1,5 +1,15 @@
-﻿DictionaryKanji,DictionaryKana,Type,Meaning
-行く,いく,u,to go4
-帰る,かえる,u,to return4
-食べる,たべる,ru,to eat4
-する,する,i,to do4
+DictionaryKanji,DictionaryKana,Type,Meaning
+会う,あう,u,to meet
+
+ある,ある,u,there is (inanimate)
+
+買う,かう,u,to buy
+
+書く,かく,u,to write
+
+撮る,とる,u,to take (a picture)
+
+待つ,まつ,u,to wait
+
+わかる,わかる,u,to understand
+いる,いる,ru,there is (alive/animate)
