@@ -1,4 +1,4 @@
-DictionaryKanji,DictionaryKana,Type,Meaning
+﻿DictionaryKanji,DictionaryKana,Type,Meaning
 
 遊ぶ,あそぶ,u,to play
 急ぐ,いそぐ,u,to hurry
@@ -23,5 +23,5 @@ DictionaryKanji,DictionaryKana,Type,Meaning
 つける,つける,ru,to turn on
 電話をかける,でんわをかける,ru,to make a phone call
 忘れる,わすれる,ru,to forget
-連れてくる,つれてくる,i,to bring (a person)
-持ってくる,もってくる,i,to bring (a thing)
+連れて来る,つれてくる,i,to bring (a person)
+持って来る,もってくる,i,to bring (a thing)

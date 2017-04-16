@@ -21,6 +21,10 @@ class Verb(object):
 
     # Potential Form
     def potential(self):
+        does_not_exist = [u"ある", u"はじまる",u"あめがふる",u"わかる",u"かかる"]
+
+        if verb.dictionary_form_kana[-2:] in does_not_exist or verb.dictionary_form_kana in does_not_exist:
+            return None 
         new_kana = u""
         new_kanji = u""
 
@@ -59,13 +63,21 @@ class Verb(object):
                              }
 
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
-            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
+            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]]
+
         
+        # Replace ga with wo for the potential
+        new_kanji.replace(u"を",u"が")
+        new_kana.replace(u"を",u"が")
         return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
     
 
     # Passive Form
     def passive(self):
+        does_not_exist = [u"ある",u"わかる",u"かかる"]
+
+        if verb.dictionary_form_kana[-2:] in does_not_exist or verb.dictionary_form_kana in does_not_exist:
+            return None 
         new_kana = u""
         new_kanji = u""
 
@@ -101,11 +113,18 @@ class Verb(object):
                               u"くる" : u"来られる"
                              }
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
-            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
+            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]]
             
+
+        new_kanji.replace(u"が",u"に")
+        new_kana.replace(u"が",u"に")    
         return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
 
     def causative(self):
+        does_not_exist = [u"ある",u"かかる"]
+
+        if verb.dictionary_form_kana[-2:] in does_not_exist or verb.dictionary_form_kana in does_not_exist:
+            return None 
         new_kana = u""
         new_kanji = u""
 
@@ -142,11 +161,17 @@ class Verb(object):
                               u"くる" : u"来させる"
                               }
             new_kana = self.kana[:-2]+irregular_kana[self.kana[-2:]]
-            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]] 
-
+            new_kanji = self.kanji[:-2]+irregular_kanji[self.kana[-2:]]
+            
+        new_kanji.replace(u"が",u"を")
+        new_kana.replace(u"が",u"を")
         return Verb(new_kanji, new_kana, u"ru", self.meaning,self.dictionary_form_kana)
 
     def causative_passive(self):
+        does_not_exist = [u"ある",u"あめがふる",u"わかる",u"かかる"]
+
+        if verb.dictionary_form_kana[-2:] in does_not_exist or verb.dictionary_form_kana in does_not_exist:
+            return None 
         new_kana = u""
         new_kanji = u""
 

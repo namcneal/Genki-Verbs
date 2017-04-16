@@ -216,7 +216,7 @@ def past(verb, speech_level="plain", polarity="positive",tense="past"):
                            u"ぬ" : u"ななかった",
                            u"す" : u"さなかった",
                            u"く" : u"かなかった",
-                           u"ぐ" : u"がかった"}
+                           u"ぐ" : u"がなかった"}
                 ending = endings[verb.kana[-1]]
       
         # Polite/Long forms
@@ -315,9 +315,9 @@ def te(verb, speech_level="plain", polarity="positive",tense="present"):
             return (verb.kanji[:-2] + u"来て", verb.kana[:-2] + u"きて")
 
 def tai(verb, speech_level="plain", polarity="positive",tense="present"):
-    does_not_exist = [u"ある"]
+    does_not_exist = [u"ある", u"あめがふる"]
 
-    if verb.dictionary_form_kana[-2:] in does_not_exist:
+    if verb.dictionary_form_kana[-2:] in does_not_exist or verb.dictionary_form_kana in does_not_exist:
         return None    
 
     kanji_stem, kana_stem = get_stem(verb)
@@ -441,18 +441,20 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
         information[0] = u"%s(%s)" %(verb.kanji, verb.kana)
 
     information.append("Aspect: ")
-    aspect = random.choice(aspect_indices)
-    information[2] += all_aspects[aspect]
-    if aspect == 0:
-        pass
-    elif aspect == 1: 
-        verb = verb.potential()
-    elif aspect == 2:
-        verb = verb.passive()
-    elif aspect == 3:
-        verb = verb.causative()
-    elif aspect == 4:
-        verb = verb.causative_passive()
+    aspected = None
+    while aspected == None:
+        aspect = random.choice(aspect_indices)
+        information[2] += all_aspects[aspect]
+        if aspect == 0:
+            pass
+        elif aspect == 1: 
+            verb = verb.potential()
+        elif aspect == 2:
+            verb = verb.passive()
+        elif aspect == 3:
+            verb = verb.causative()
+        elif aspect == 4:
+            verb = verb.causative_passive()
 
     possible_speech_levels = list()
     if plain:
