@@ -408,7 +408,7 @@ class Application(Frame):
             while entry == None:
                 entry = get_random_conjugation(random.choice(all_verbs), **self.game_params)
             self.verbs.append(entry)
-        
+        print self.verbs
         self.get_and_display_current_conjugation()
 
     def restart_game(self, event=None):

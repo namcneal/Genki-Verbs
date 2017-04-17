@@ -443,19 +443,23 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
     information.append("Aspect: ")
     aspect = random.choice(aspect_indices)
     information[2] += all_aspects[aspect]
-    try:
-        if aspect == 0:
-            verb = verb
-        elif aspect == 1: 
-            verb = verb.potential()
-        elif aspect == 2:
-            verb = verb.passive()
-        elif aspect == 3:
-            verb = verb.causative()
-        elif aspect == 4:
-            verb = verb.causative_passive()
-    except AttributeError:
+    aspected = None
+    if aspect == 0:
+        aspected = verb
+    elif aspect == 1: 
+        aspected = verb.potential()
+    elif aspect == 2:
+        aspected = verb.passive()
+    elif aspect == 3:
+        aspected = verb.causative()
+    elif aspect == 4:
+        aspected = verb.causative_passive()
+
+    if aspected == None:
         return None
+    else:
+        verb= aspected
+            
 
     possible_speech_levels = list()
     if plain:
@@ -478,15 +482,13 @@ def get_random_conjugation(verb, aspect_indices, form_indices, plain, polite, po
     if past:
         possible_tenses.append("Past")
     tense = random.choice(possible_tenses)
+
     
-    try:
-        information.append("")
-        form_index = random.choice(form_indices)
-        information[3] += form_names[form_index]
-        conjugated = all_forms[form_index](verb, level.lower(), polarity.lower(), tense.lower())
-    except AttributeError:
-        return None
-    except TypeError:
+    information.append("")
+    form_index = random.choice(form_indices)
+    information[3] += form_names[form_index]
+    conjugated = all_forms[form_index](verb, level.lower(), polarity.lower(), tense.lower())
+    if conjugated == None:
         return None
 
     information.append(polarity)
