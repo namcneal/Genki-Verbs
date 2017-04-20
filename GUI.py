@@ -3,6 +3,7 @@ from Tkinter import *
 import FileIO
 import random
 from Conjugation import get_random_conjugation
+import romkan
 
 class Application(Frame):
     def createWidgets(self, sidebar_width):
@@ -198,7 +199,8 @@ class Application(Frame):
 
     def is_conjugation_correct(self):
         if (self.user_entry.get() == self.verbs[0][7][0]) or \
-            self.user_entry.get() == self.verbs[0][7][1]:
+            self.user_entry.get() == self.verbs[0][7][1] or \
+            self.user_entry.get() == romkan.to_roma(self.verbs[0][7][1]):
             return True
         else: return False
 
@@ -408,7 +410,6 @@ class Application(Frame):
             while entry == None:
                 entry = get_random_conjugation(random.choice(all_verbs), **self.game_params)
             self.verbs.append(entry)
-        print self.verbs
         self.get_and_display_current_conjugation()
 
     def restart_game(self, event=None):
